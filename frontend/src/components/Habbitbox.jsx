@@ -1,23 +1,71 @@
 
-import React, { useState } from 'react'
-import { Habbit } from '../assets/mockdata'
+import React, { useEffect, useState } from 'react'
 import { useAtom } from 'jotai';
-import { CategoryAtom, dateAtom } from '../atom/atom';
+import { CategoryAtom, CompletedAtom, dateAtom, HabbitAtom, XPAtom } from '../atom/atom';
 import Category from './Category';
+import axios from 'axios'
 
-function Habbitbox({OnCompleted,width,checked,color}) {
+function Habbitbox({OnCompleted,width,color}) {
     const [date, setDate] = useAtom(dateAtom)
     const today = date.toLocaleDateString("en-CA");
     const [activeNoteIndex, setActiveNoteIndex] = useState(null)
-    const [completed,setCompleted]=useState(false)
+    const [completed,setCompleted]=useAtom(CompletedAtom)
     const [SaveNotes,setSaveNotes]=useState("")
     const [Category1,setCategory]=useAtom(CategoryAtom)
+    const [Habbit,setHabbit]=useAtom(HabbitAtom)
+    const [id,setId]=useState(0)
+    const [XP,setXP]=useAtom(XPAtom)    
     
+  const apiUrl= import.meta.env.VITE_API_URL
+
+    useEffect(()=>{
+      const FetchAll=async()=>{
+        const response=await axios.get(`${apiUrl}view`)
+        setHabbit(response.data)
+      }
+      FetchAll()
+    },[completed])
     
+  const handleCheckboxChange = async (id, currentCompleted) => {
+  try {
+    const response = await axios.put(`${apiUrl}habits/${id}`, {
+      completed: !currentCompleted
+    });
+
+    setHabbit(prev => {
+      const updated = prev.map(habit =>
+        habit.id === id ? { ...habit, completed: !currentCompleted } : habit
+      );
+      setXP(prev=>prev + 100)
+
+
+      return updated.filter(habit => habit.completed === OnCompleted);
+    })
+  } catch (error) {
+    console.error("Error updating habit:", error);
+  }
+}
+const NotesUpdate=async(habitId,notes)=>{
+
+    const response=await axios.put(`${apiUrl}habits/${habitId}`,{
+      notes:notes
+    })
+    setHabbit(prev =>
+prev.map(habit =>
+habit.id === habitId ? { ...habit, notes: notes } : habit
+)
+);
+            }
+  const deleteHabbit=async(habitId)=>{
+      const response=await axios.delete(`${apiUrl}habits/delete/${habitId}`)
+      setHabbit(prev => prev.filter(habit => habit.id !== habitId));
+    }
+
+
 
   return (
     <div>
-        <div className={`bg-red-400 rounded-lg ${width}  h-93 overflow-auto`}>
+        <div className={`bg-gradient-to-r from-violet-600 to-indigo-600 rounded-lg ${width}  h-93 overflow-auto`}>
             {(() => {
   const filteredHabits = Habbit.filter((habit) => {
     const Category=habit.category==Category1||Category1===""
@@ -41,7 +89,8 @@ function Habbitbox({OnCompleted,width,checked,color}) {
       <div key={index} className={` h-auto ${color} text-black p-4 m-4 rounded`}>
         <div className='flex justify-between items-center'>
           <div className='flex  items-center'>
-            <input type="checkbox" defaultChecked={checked} className='mr-2 h-5 w-5 '  onChange={()=>setCompleted(!completed)}/>
+            <input type="checkbox" className='mr-2 h-5 w-5 '  defaultChecked={habitO.completed}
+      onChange={() => handleCheckboxChange(habitO.id, habitO.completed)}/>
             <span>{habitO.name}</span>
             <div className='text-sm gap-2 text-gray-600 pl-5 pt-1'><span>Notes:</span> <span>{habitO.notes}</span></div>
           </div>
@@ -65,7 +114,19 @@ function Habbitbox({OnCompleted,width,checked,color}) {
               onChange={(e) => setSaveNotes({ ...SaveNotes, [index]: e.target.value })}
             value={SaveNotes[index] || habitO.notes}
             />
-            <button className='mt-2 bg-green-500 text-white px-4 py-2 rounded'>Save</button>
+            <div className='flex gap-10'>
+            <button onClick={()=>{
+              NotesUpdate(habitO.id, SaveNotes[index] || habitO.notes);
+              setActiveNoteIndex(null);
+
+            }} className='mt-2 bg-green-500 text-white px-4 py-2 rounded'>Save</button>
+            <button onClick={()=>{
+              deleteHabbit(habitO.id)
+              setActiveNoteIndex(null);
+
+            }} className='mt-2 bg-red-500 text-white px-4 py-2 rounded'>Delete</button>
+
+            </div>
           </div>
         )}
       </div>

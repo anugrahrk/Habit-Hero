@@ -2,11 +2,11 @@
 import React from "react";
 import { PDFDownloadLink } from "@react-pdf/renderer";
 import { HabitReportPDF } from "./HabitReportPDF";
-import { useAtomValue } from "jotai";
-import { percentageAtom } from "../atom/atom";
-import { Habbit } from "../assets/mockdata";
+import { useAtom, useAtomValue } from "jotai";
+import { HabbitAtom, percentageAtom } from "../atom/atom";
 
 export default function PrintPdf() {
+    const [Habbit,setHabbit]=useAtom(HabbitAtom)
     const percentage=useAtomValue(percentageAtom)
   
   return (
@@ -14,6 +14,7 @@ export default function PrintPdf() {
       <PDFDownloadLink
         document={
           <HabitReportPDF
+          Habbit={Habbit}
             week="Aug 7 – Aug 10, 2025"
             user="Anugrah Rk"
             progress={percentage+"%"}

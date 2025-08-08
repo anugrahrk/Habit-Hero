@@ -1,9 +1,9 @@
 // HabitReportPDF.jsx
 import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
-import { Habbit } from "../assets/mockdata";
-import { useAtomValue } from "jotai";
-import { percentageAtom } from "../atom/atom";
+
+import { useAtom, useAtomValue } from "jotai";
+import { HabbitAtom, percentageAtom } from "../atom/atom";
 
 const styles = StyleSheet.create({
   page: { padding: 30, fontSize: 12, fontFamily: "Helvetica" },
@@ -16,7 +16,8 @@ const styles = StyleSheet.create({
 });
 
 
-export const HabitReportPDF = ({ week, user, progress, streak, bestDay}) =>{ 
+export const HabitReportPDF = ({ week, user, progress, streak, bestDay, Habbit}) =>{ 
+  
 
     
     return(
@@ -50,12 +51,12 @@ export const HabitReportPDF = ({ week, user, progress, streak, bestDay}) =>{
           
         </View>
         {/* Table Rows */}
-        {Habbit.map((day, idx) => (
+        {Habbit.map((habit, idx) => (
           <View style={styles.tableRow} key={idx}>
-            <Text style={styles.tableCol}>{day.name}</Text>
-            <Text style={styles.tableCol}>{day.category}</Text>
-            <Text style={styles.tableCol}>{day.startdate}</Text>
-            <Text style={styles.tableCol}>{day.completed}</Text>
+            <Text style={styles.tableCol}>{habit.name}</Text>
+            <Text style={styles.tableCol}>{habit.category}</Text>
+            <Text style={styles.tableCol}>{habit.startdate}</Text>
+            <Text style={styles.tableCol}>{habit.completed==true?"True":"False"}</Text>
           </View>
         ))}
       </View>
