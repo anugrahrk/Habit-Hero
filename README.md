@@ -5,6 +5,50 @@ Habit Hero is a React-based habit tracking app supporting daily and weekly habit
 
 ---
 
+## Folder Structure
+
+backend/
+├── venv/
+├── .env
+├── .gitignore
+├── app.py
+├── db.py
+├── models.py
+└── requirements.txt
+
+frontend/
+├── node_modules/
+├── public/
+├── src/
+│   ├── assets/
+│   ├── atom/
+│   │   └── atom.jsx
+│   └── components/
+│       ├── Addnew.jsx
+│       ├── AIcontainer.jsx
+│       ├── Bestday.jsx
+│       ├── Category.jsx
+│       ├── DropDown.jsx
+│       ├── Habbitbox.jsx
+│       ├── HabbitContainer.jsx
+│       ├── HabitReportPDF.jsx
+│       ├── Header.jsx
+│       ├── Home.jsx
+│       ├── Login.jsx
+│       ├── PrintPdf.jsx
+│       ├── Rightside.jsx
+│       └── Streak.jsx
+├── App.css
+├── App.jsx
+├── index.css
+├── main.jsx
+├── .env
+├── .gitignore
+└── eslint.config.js
+
+
+---
+
 ## Frontend Setup Instructions
 
 1. Clone the repo:  
