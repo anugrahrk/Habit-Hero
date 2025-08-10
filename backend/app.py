@@ -8,6 +8,7 @@ import os
 from dotenv import load_dotenv
 import json
 from datetime import date
+from flask_migrate import Migrate
 
 load_dotenv()
 
@@ -19,6 +20,7 @@ CORS(app)
 app.config['SQLALCHEMY_DATABASE_URI'] = os.getenv("DATABASE_URL")
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
+migrate = Migrate(app, db)
 
 db.init_app(app)
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)

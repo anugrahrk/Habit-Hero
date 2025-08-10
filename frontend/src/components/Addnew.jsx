@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import DropDown from './DropDown'
 import { useAtom } from 'jotai'
-import { AddnewAtom, frequencyAtom } from '../atom/atom'
+import { AddnewAtom, frequencyAtom, HabbitAtom } from '../atom/atom'
 import axios from 'axios'
 
 function Addnew() {
@@ -12,6 +12,7 @@ function Addnew() {
   const [startdate, setStartdate] = useState("");
   const [category, setCategory] = useState("");
   const [freq, setFreq] = useAtom(frequencyAtom);
+  const [Habbit,setHabbit]=useAtom(HabbitAtom)
   const apiUrl = import.meta.env.VITE_API_URL;
 
   const onButtonclick = async () => {
@@ -22,16 +23,15 @@ function Addnew() {
         category: category,
         frequency: freq,
       });
-      if (response.data.msg === "Habit added successfully") {
-        setaddNew(false);
-      }
+      setHabbit(prev=>[...prev,response])
     } catch (error) {
       console.error("Failed to add habit:", error);
     }
+
   };
 
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center w-screen md:w-auto">
       <div className="absolute w-2/4 h-2/4 border border-gray-200 bg-white rounded-lg shadow-sm p-15 ">
         <form
           onSubmit={async (e) => {
@@ -75,7 +75,7 @@ function Addnew() {
             <p>Category:</p>
             <div
               onClick={() => setOpen(!open)}
-              className="relative w-2/6 h-7 border border-gray-400 rounded-lg shadow-xs flex items-end justify-around"
+              className="relative w-2/6 h-7 border border-gray-400 rounded-lg shadow-xs flex items-end justify-end"
             >
               {category}
               <svg

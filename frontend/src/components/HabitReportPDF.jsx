@@ -1,4 +1,4 @@
-// HabitReportPDF.jsx
+
 import React from "react";
 import { Page, Text, View, Document, StyleSheet } from "@react-pdf/renderer";
 
@@ -24,44 +24,39 @@ export const HabitReportPDF = ({ week, user, progress, streak, bestDay, Habbit})
         
   <Document>
     <Page size="A4" style={styles.page}>
-      {/* Title */}
-      <Text style={styles.title}>HABIT HERO — WEEKLY REPORT</Text>
+      <Text style={styles.title}>HABIT HERO — DAILY REPORT</Text>
       <View style={styles.section}>
-        <Text>Week: {week}</Text>
+        <Text>Days Included: {week}</Text>
         <Text>User: {user}</Text>
       </View>
 
-      {/* Progress Summary */}
       <View style={styles.section}>
         <Text>Total Habits Completed: {progress}</Text>
         <Text>Current Streak: {streak} days</Text>
         <Text>Best Day: {bestDay}</Text>
       </View>
 
-      {/* Daily Breakdown Table */}
       <Text style={{ marginBottom: 4 }}>Daily Breakdown:</Text>
       <View style={styles.table}>
-        {/* Table Header */}
         <View style={[styles.tableRow, styles.bold]}>
             <Text style={styles.tableCol}>Name</Text>
-            <Text style={styles.tableCol}>Category</Text>
           <Text style={styles.tableCol}>Date</Text>
+          <Text style={styles.tableCol}>Frequency</Text>
           <Text style={styles.tableCol}>Completed</Text>
+
           
           
         </View>
-        {/* Table Rows */}
         {Habbit.map((habit, idx) => (
           <View style={styles.tableRow} key={idx}>
             <Text style={styles.tableCol}>{habit.name}</Text>
-            <Text style={styles.tableCol}>{habit.category}</Text>
             <Text style={styles.tableCol}>{habit.startdate}</Text>
+            <Text style={styles.tableCol}>{habit.frequency}</Text>
             <Text style={styles.tableCol}>{habit.completed==true?"True":"False"}</Text>
           </View>
         ))}
       </View>
 
-      {/* Top Habits */}
       {/* <View style={styles.section}>
         <Text style={{ marginTop: 10 }}>Top Habits:</Text>
         {Habbit.map((habit, idx) => (

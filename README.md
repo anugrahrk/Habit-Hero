@@ -5,49 +5,7 @@ Habit Hero is a React-based habit tracking app supporting daily and weekly habit
 
 ---
 
-## Folder Structure
 
-backend/
-├── venv/
-├── .env
-├── .gitignore
-├── app.py
-├── db.py
-├── models.py
-└── requirements.txt
-
-frontend/
-├── node_modules/
-├── public/
-├── src/
-│   ├── assets/
-│   ├── atom/
-│   │   └── atom.jsx
-│   └── components/
-│       ├── Addnew.jsx
-│       ├── AIcontainer.jsx
-│       ├── Bestday.jsx
-│       ├── Category.jsx
-│       ├── DropDown.jsx
-│       ├── Habbitbox.jsx
-│       ├── HabbitContainer.jsx
-│       ├── HabitReportPDF.jsx
-│       ├── Header.jsx
-│       ├── Home.jsx
-│       ├── Login.jsx
-│       ├── PrintPdf.jsx
-│       ├── Rightside.jsx
-│       └── Streak.jsx
-├── App.css
-├── App.jsx
-├── index.css
-├── main.jsx
-├── .env
-├── .gitignore
-└── eslint.config.js
-
-
----
 
 ## Frontend Setup Instructions
 
@@ -80,7 +38,7 @@ frontend/
 
 ---
 
-## Frontend Setup Instructions
+## Backend Setup Instructions
 
 1. Change Directory:    
    `cd habit-hero`
@@ -95,13 +53,16 @@ frontend/
 
 3. Create `.env` file in project root with:  
    `DATABASE_URL=`
-   `GEMINI_API_KEY=`  
+   `GEMINI_API_KEY=`
 
-4. Run frontend dev server:  
+4. Run Database migration:
+   `flask db upgrade`
+
+5. Run frontend dev server:  
    `python app.py`
 
 
-5. Open the browser/postman at the given URL (usually `http://127.0.0.1:5000/`)
+6. Open the browser/postman at the given URL (usually `http://127.0.0.1:5000/`)
 ---
 
 ## Features
@@ -115,6 +76,8 @@ frontend/
 - Calendar view to select and track dates  
 - AI generated habit recommendations to add with a click  
 - Generate weekly PDF reports for habits
+- Added Toast notification for motivational quotes on refresh
+- Responsive for mobile screen
 
 ---
 
@@ -136,6 +99,7 @@ frontend/
 - XP increments by 100 for every completed habit  
 - Weekly habits logic based on ISO week number comparison  
 - Backend API must follow the expected REST routes and data formats  
-- Uses localStorage to persist streak count and last checked date  
+- Uses localStorage to persist streak count, last checked date and best day  
+- Migrations included 
 
 ---

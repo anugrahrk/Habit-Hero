@@ -15,11 +15,11 @@ export default function PrintPdf() {
         document={
           <HabitReportPDF
           Habbit={Habbit}
-            week="Aug 7 – Aug 10, 2025"
+            week={`2025-08-07 – ${new Date().toLocaleDateString("en-CA")}`}
             user="Anugrah Rk"
             progress={percentage+"%"}
             streak={localStorage.getItem("StreakCount")}
-            bestDay="2025-08-08"
+            bestDay={localStorage.getItem("BestDay")}
 
           />
         }

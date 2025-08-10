@@ -48,11 +48,11 @@ function Home() {
   return (
     <>
       <div className='w-screen h-auto overflow-x-hidden'>
-        
-        <div className='grid grid-cols-3 '>
-          
-          <div className=' col-span-2 h-full'>
             <Header/>
+        
+        <div className='grid grid-rows-1 md:grid-cols-3 '>
+          
+          <div className='order-2 md:order-0 md:col-span-2 h-full'>
             <Category/>
             <HabbitContainer/>
           </div>
