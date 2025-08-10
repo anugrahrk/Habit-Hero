@@ -32,7 +32,7 @@ function Addnew() {
 
   return (
     <div className="flex justify-center w-screen md:w-auto">
-      <div className="absolute w-2/4 h-2/4 border border-gray-200 bg-white rounded-lg shadow-sm p-15 ">
+      <div className="absolutew-screen md:w-2/4 h-2/4 border border-gray-200 bg-white rounded-lg shadow-sm p-15 ">
         <form
           onSubmit={async (e) => {
             e.preventDefault();
