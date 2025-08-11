@@ -20,20 +20,7 @@ function Habbitbox({OnCompleted,width,color}) {
   const apiUrl= import.meta.env.VITE_API_URL
   const calenderday=date.toLocaleDateString("en-CA");
 
-const handleCheckboxChange = async (id, currentCompleted) => {
-  try {
-    await axios.put(`${apiUrl}habits/${id}`, {
-      completed: !currentCompleted
-    });
-    setHabbit(prev =>
-      prev.map(habit =>
-        habit.id === id ? { ...habit, completed: !currentCompleted } : habit
-      )
-    );
-  } catch (error) {
-    console.error("Error updating habit:", error);
-  }
-};
+
 
     useEffect(()=>{
       const FetchAll=async()=>{
@@ -59,15 +46,18 @@ const handleCheckboxChange = async (id, currentCompleted) => {
     
   const handleCheckboxChange = async (id, currentCompleted) => {
   try {
-    const response = await axios.put(`${apiUrl}habits/${id}`, {
+    await axios.put(`${apiUrl}habits/${id}`, {
       completed: !currentCompleted
     });
-
-    
+    setHabbit(prev =>
+      prev.map(habit =>
+        habit.id === id ? { ...habit, completed: !currentCompleted } : habit
+      )
+    );
   } catch (error) {
     console.error("Error updating habit:", error);
   }
-}
+};
 const NotesUpdate=async(habitId,notes)=>{
 
     const response=await axios.put(`${apiUrl}habits/${habitId}`,{
