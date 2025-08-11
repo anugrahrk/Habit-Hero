@@ -20,6 +20,20 @@ function Habbitbox({OnCompleted,width,color}) {
   const apiUrl= import.meta.env.VITE_API_URL
   const calenderday=date.toLocaleDateString("en-CA");
 
+const handleCheckboxChange = async (id, currentCompleted) => {
+  try {
+    await axios.put(`${apiUrl}habits/${id}`, {
+      completed: !currentCompleted
+    });
+    setHabbit(prev =>
+      prev.map(habit =>
+        habit.id === id ? { ...habit, completed: !currentCompleted } : habit
+      )
+    );
+  } catch (error) {
+    console.error("Error updating habit:", error);
+  }
+};
 
     useEffect(()=>{
       const FetchAll=async()=>{
@@ -104,10 +118,12 @@ habit.id === habitId ? { ...habit, notes: notes } : habit
       <div key={habitO.id} className={` h-auto ${color} text-black p-4 m-4 rounded`}>
         <div className='flex justify-between items-center'>
           <div className='flex  items-center'>
-            <input  type="checkbox" className='mr-2 h-5 w-5 '  defaultChecked={OnCompleted}
-      onChange={() => {handleCheckboxChange(habitO.id, habitO.completed)
-        setCompleted(!completed)
-      }}/>
+       <input
+  type="checkbox"
+  className='mr-2 h-5 w-5'
+  checked={habitO.completed}
+  onChange={() => handleCheckboxChange(habitO.id, habitO.completed)}
+/>
             <span>{habitO.name}</span>
             <div className='text-sm gap-2 text-gray-600 pl-5 pt-1'><span>Notes:</span> <span>{habitO.notes}</span></div>
           </div>
